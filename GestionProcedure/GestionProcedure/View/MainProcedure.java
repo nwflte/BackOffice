@@ -37,6 +37,7 @@ public class MainProcedure extends JFrame {
 				try {
 					Class.forName("Business.GestionProcedure").newInstance();
 					ArrayList<Procedure> list = GestionProcedure.getAllProcedures();
+					Procedure proc = GestionProcedure.getProcedureCommencePar("proce");
 					System.out.println("Here");
 				} catch (Exception e) {
 					e.printStackTrace();
