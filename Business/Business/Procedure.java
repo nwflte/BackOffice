@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Procedure {
 	private int procedure_id;
-	private int chef_id;
+	private Chef chef;
 	private String procedure_nom;
 	private String service_nom;
 	private LocalDateTime date_creation;
@@ -23,11 +23,12 @@ public class Procedure {
 	public void setProcedure_id(int procedure_id) {
 		this.procedure_id = procedure_id;
 	}
-	public int getChef_id() {
-		return chef_id;
+
+	public Chef getChef() {
+		return chef;
 	}
-	public void setChef_id(int chef_id) {
-		this.chef_id = chef_id;
+	public void setChef(Chef chef) {
+		this.chef = chef;
 	}
 	public String getProcedure_nom() {
 		return procedure_nom;
