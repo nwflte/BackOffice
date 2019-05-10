@@ -12,12 +12,17 @@ import javax.swing.border.EmptyBorder;
 import GestionProcedure.Model.MainProcedureTableModel;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
+import Business.GestionProcedure;
+import Business.Procedure;
 
 public class MainProcedure extends JFrame {
 
@@ -30,9 +35,9 @@ public class MainProcedure extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainProcedureTableModel mainProcedureTableModel = new MainProcedureTableModel();
-					MainProcedure frame = new MainProcedure(mainProcedureTableModel);
-					frame.setVisible(true);
+					Class.forName("Business.GestionProcedure").newInstance();
+					ArrayList<Procedure> list = GestionProcedure.getAllProcedures();
+					System.out.println("Here");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

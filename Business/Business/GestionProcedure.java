@@ -1,7 +1,6 @@
 package Business;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import DAO.ProcedureDAO;
@@ -20,7 +19,7 @@ public class GestionProcedure{
 	}
 
 	
-	public static List<Procedure> getAllProcedures() {
+	public static ArrayList<Procedure> getAllProcedures() {
 		return listeProcedures;
 	}
 

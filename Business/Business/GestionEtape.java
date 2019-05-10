@@ -3,9 +3,18 @@ package Business;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import DAO.EtapeDAO;
+
 public class GestionEtape {
 	private static ArrayList<Etape> listeEtapes;
 	
+	static {
+		listeEtapes = EtapeDAO.getAll();
+	}
+	
+	public static ArrayList<Etape> getAllEtapes() {
+		return listeEtapes;
+	}
 	
 	public static Etape getEtape(int id) {
 		Optional<Etape> etape = listeEtapes.stream().filter(et -> et.getEtape_id() == id).findAny();

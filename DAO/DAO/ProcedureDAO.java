@@ -2,8 +2,6 @@ package DAO;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import Business.GestionChef;
@@ -36,8 +34,8 @@ public class ProcedureDAO {
 		procedure.setChef(GestionChef.getChef(result.getInt("chef_id")));
 		procedure.setProcedure_nom(result.getString("procedure_nom"));
 		procedure.setService_nom(result.getString("service_nom"));
-		procedure.setDate_creation(LocalDateTime.from(Instant.ofEpochMilli(result.getDate("date_creation").getTime())));
-		procedure.setDate_modification(LocalDateTime.from(Instant.ofEpochMilli(result.getDate("date_modification").getTime())));
+		procedure.setDate_creation(HelpersDAO.dateToLocalDateTime(result.getDate("date_creation")));
+		procedure.setDate_modification(HelpersDAO.dateToLocalDateTime(result.getDate("date_modification")));
 		procedure.setArchived(result.getBoolean("archived"));
 		procedure.setNbr_documents(result.getInt("nbr_documents"));
 		procedure.setNbr_etapes(result.getInt("nbr_etapes"));

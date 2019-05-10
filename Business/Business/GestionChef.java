@@ -3,6 +3,8 @@ package Business;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import DAO.ChefDAO;
+
 public class GestionChef {
 	private static ArrayList<Chef> listeChefs;
 	
@@ -15,7 +17,7 @@ public class GestionChef {
 		return chef.isPresent() == true ? chef.get() : null;
 	}
 	
-	public static List<Chef> getAllChefs() {
+	public static ArrayList<Chef> getAllChefs() {
 		return listeChefs;
 	}
 }

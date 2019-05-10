@@ -3,9 +3,18 @@ package Business;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import DAO.DocumentDAO;
+
 public class GestionDocument {
 	private static ArrayList<Document> listeDocuments;
 	
+	static {
+		listeDocuments = DocumentDAO.getAll();
+	}
+	
+	public static ArrayList<Document> getAllDocuments() {
+		return listeDocuments;
+	}
 	
 	public static Document getDocument(int id) {
 		Optional<Document> document = listeDocuments.stream().filter(et -> et.getDocument_id() == id).findAny();

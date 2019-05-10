@@ -1,5 +1,10 @@
 package DAO;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class HelpersDAO {
 	
 	public static String[] stringSplit(String s) {
@@ -16,5 +21,9 @@ public class HelpersDAO {
 			intArray[i] = Integer.parseInt(stringArray[i]);
 		}
 		return intArray;
+	}
+	
+	public static LocalDateTime dateToLocalDateTime(Date date) {
+		return LocalDateTime.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.of("UTC")));
 	}
 }
