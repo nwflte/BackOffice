@@ -24,27 +24,16 @@ import java.awt.GridBagConstraints;
 import Business.GestionProcedure;
 import Business.Procedure;
 
+/**
+ * Fenetre principale de gestion des procedures (Autre fenetre "Dialog" vont etre ajoutees)
+ * @author naouf
+ *
+ */
 public class MainProcedure extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Class.forName("Business.GestionProcedure").newInstance();
-					ArrayList<Procedure> list = GestionProcedure.getAllProcedures();
-					Procedure proc = GestionProcedure.getProcedureCommencePar("proce");
-					System.out.println("Here");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -56,7 +45,7 @@ public class MainProcedure extends JFrame {
 		setContentPane(contentPane);
 		
 		
-		JTable table = new JTable(mainProcedureTableModel);
+		MainProcedureTable table = new MainProcedureTable(mainProcedureTableModel);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane, BorderLayout.CENTER);

@@ -2,15 +2,27 @@ package GestionProcedure.Model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
-import Business.Procedure;;
+import Business.Chef;
+import Business.Procedure;
+import Business.GestionProcedure;
+import Business.GestionChef;
 
+
+/**
+ * Model pour la fenetre principale (d'autres models vont etre ajoutes pour d'autres fenetres ou dialogs)
+ * @author naouf
+ *
+ */
 public class MainProcedureTableModel extends AbstractTableModel {
 	
 	ArrayList<Procedure> listeProcedure;
 	ArrayList<Chef> listeChef ;
 	
+	public MainProcedureTableModel() {
+		this.listeProcedure = GestionProcedure.getAllProcedures();
+		this.listeChef = GestionChef.getAllChefs();
+	}
 	
 	public MainProcedureTableModel(ArrayList<Procedure> listeProcedure) {
 		super();
@@ -21,7 +33,7 @@ public class MainProcedureTableModel extends AbstractTableModel {
 	String[] columnsName = {"id", "Chef", "Nom", "Service", "Date Creation"
 							, "Date Modification", "Archivée", "Nbr Documents", "Nbr Etapes"};
 	
-	Class[] columnsClass = {Integer.class, Integer.class, String.class, String.class
+	Class[] columnsClass = {Integer.class, String.class, String.class, String.class
 							, LocalDateTime.class, LocalDateTime.class, Boolean.class, Integer.class, Integer.class};
 	
 	@Override
@@ -42,7 +54,7 @@ public class MainProcedureTableModel extends AbstractTableModel {
 		Procedure row = this.listeProcedure.get(rowIndex);
 		switch (columnIndex) {
 			case 0 : return row.getProcedure_id(); 
-			case 1 : return row.getChef_id(); 
+			case 1 : return row.getChef().getEmploye().getNom(); 
 			case 2 : return row.getProcedure_nom();
 			case 3 : return row.getService_nom();
 			case 4 : return row.getDate_creation();
