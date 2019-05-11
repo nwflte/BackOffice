@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class HelpersDAO {
-	private int branch;
+	private int pull;
 	
 	public static String[] stringSplit(String s) {
 		String[] stringArray;
