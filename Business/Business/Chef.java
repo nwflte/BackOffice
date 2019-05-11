@@ -2,7 +2,7 @@ package Business;
 
 import java.time.LocalDateTime;
 
-public class Chef {
+public class Chef implements IDInterface {
 	private int chef_id;
 	private Employe employe;
 	private User user;
@@ -14,6 +14,8 @@ public class Chef {
 	public int getChef_id() {
 		return chef_id;
 	}
+	
+	
 	public void setChef_id(int chef_id) {
 		this.chef_id = chef_id;
 	}
@@ -52,6 +54,18 @@ public class Chef {
 	}
 	public void setArchived(boolean archived) {
 		this.archived = archived;
+	}
+
+
+	@Override
+	public int getID() {
+		return this.getChef_id();
+	}
+
+
+	@Override
+	public String getText() {
+		return this.getEmploye().getNom() + " " + this.getEmploye().getPrenom();
 	}
 	
 	
