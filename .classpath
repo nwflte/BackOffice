@@ -5,6 +5,7 @@
 	<classpathentry kind="src" path="GestionProcedure"/>
 	<classpathentry kind="src" path="Business"/>
 	<classpathentry kind="src" path="DAO"/>
+	<classpathentry kind="src" path="Util"/>
 	<classpathentry kind="lib" path="mysql-connector-java-8.0.13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
