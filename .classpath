@@ -7,7 +7,7 @@
 	<classpathentry kind="src" path="DAO"/>
 	<classpathentry kind="src" path="Util"/>
 	<classpathentry kind="lib" path="mysql-connector-java-8.0.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/naouf/Downloads/forms-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/naouf/Downloads/swingx-1.6.1.jar"/>
+	<classpathentry kind="lib" path="forms-1.2.1.jar"/>
+	<classpathentry kind="lib" path="swingx-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
