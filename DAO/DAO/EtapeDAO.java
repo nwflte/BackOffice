@@ -33,11 +33,10 @@ public class EtapeDAO {
 	public static int add(Etape etape) {
 		String addEtape = "INSERT INTO etapes(employe_id, etape_nom, date_creation, date_modification, archived, nbr_documents, documents)"
 				+ " VALUES(?,?,?,?,?,?,?)";
-		String generatedColumns[] = {"etape_id"};
 		
 		PreparedStatement st;
 		try {
-			st = ConnectionSingleton.getConn().prepareStatement(addEtape, generatedColumns);
+			st = ConnectionSingleton.getConn().prepareStatement(addEtape, PreparedStatement.RETURN_GENERATED_KEYS);
 			st.setInt(1, etape.getEmploye().getEmploye_id());
 			st.setString(2, etape.getEtape_nom());
 			st.setDate(3, Date.valueOf(etape.getDate_creation().toLocalDate()));
@@ -47,7 +46,8 @@ public class EtapeDAO {
 			st.setString(7, HelpersDAO.documentsListToString(etape.getDocuments()));
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
-			return rs.getInt("etape_id");
+			rs.next();
+			return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;

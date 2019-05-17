@@ -29,16 +29,16 @@ public class DocumentDAO {
 	
 	public static int add(Document document) {
 		String addDoc = "INSERT INTO documents(document_nom, document_type) values(?, ?)";
-		String generatedColumns[] = {"document_id"};
 		
 		PreparedStatement st;
 		try {
-			st = ConnectionSingleton.getConn().prepareStatement(addDoc, generatedColumns);
+			st = ConnectionSingleton.getConn().prepareStatement(addDoc, PreparedStatement.RETURN_GENERATED_KEYS);
 			st.setString(1, document.getDocument_nom());
 			st.setString(2, document.getDocument_type());
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
-			return rs.getInt("document_id");
+			rs.next();
+			return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;

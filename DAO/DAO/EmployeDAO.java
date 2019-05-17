@@ -32,12 +32,11 @@ public class EmployeDAO {
 	public static int add(Employe employe) {
 		String addEmp = "INSERT INTO employes(user_id, somme, nom, prenom, email, genre, CIN, telephone,"
 				+ "date_naissance, date_recrutement, date_creation, date_modification, archived) "
-				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		String generatedColumns[] = {"employe_id"};
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement st;
 		try {
-			st = ConnectionSingleton.getConn().prepareStatement(addEmp, generatedColumns);
+			st = ConnectionSingleton.getConn().prepareStatement(addEmp, PreparedStatement.RETURN_GENERATED_KEYS);
 			st.setInt(1, employe.getUser().getUser_id());
 			st.setString(2, employe.getSomme());
 			st.setString(3, employe.getNom());
@@ -54,9 +53,11 @@ public class EmployeDAO {
 			
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
-			return rs.getInt("chef_id");
+			rs.next();
+			return rs.getInt(1);
 			
 		}catch (SQLException e) {
+			GestionUser.removeUser(employe.getUser());
 			e.printStackTrace();
 			return 0;
 		}

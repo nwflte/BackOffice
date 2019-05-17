@@ -30,11 +30,10 @@ public class UserDAO {
 	public static int add(User user) {
 		String addUser = "INSERT INTO users(username, password, role, date_creation)"
 				+ " VALUES(?,?,?,?)";
-		String generatedColumns[] = {"user_id"};
 		
 		PreparedStatement st;
 		try {
-			st = ConnectionSingleton.getConn().prepareStatement(addUser, generatedColumns);
+			st = ConnectionSingleton.getConn().prepareStatement(addUser, PreparedStatement.RETURN_GENERATED_KEYS);
 			st.setString(1, user.getUsername());
 			st.setString(2, user.getPassword());
 			st.setString(3, user.getRole());
@@ -42,7 +41,8 @@ public class UserDAO {
 			
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
-			return rs.getInt("user_id");
+			rs.next();
+			return rs.getInt(1);
 		}  catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -63,6 +63,20 @@ public class UserDAO {
 		}
 		return user;	
 
+	}
+
+	public static boolean remove(User user) {
+		String remove = "DELETE FROM users where user_id = " + user.getUser_id();
+		
+		try {
+			Statement st = ConnectionSingleton.getConn().createStatement();
+			st.executeUpdate(remove);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 	
 }

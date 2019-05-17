@@ -31,4 +31,12 @@ public class GestionUser {
 		listeUsers.add(user);
 		return true;
 	}
+
+	public static boolean removeUser(User user) {
+		if(UserDAO.remove(user)) {
+			listeUsers.remove(user);
+			return true;
+		}
+		return false;
+	}
 }

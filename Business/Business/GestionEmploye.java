@@ -26,7 +26,10 @@ public class GestionEmploye {
 		if ( listeEmployes.stream().anyMatch(em -> em.getCIN().equals(employe.getCIN())) ) return false;
 		if(GestionUser.addUser(employe.getUser()) == false) return false;
 		int id = EmployeDAO.add(employe);
-		if(id == 0) return false;
+		if(id == 0) {
+			GestionUser.removeUser(employe.getUser());
+			return false;
+		}
 		else employe.setEmploye_id(id);
 		listeEmployes.add(employe);
 		return true;

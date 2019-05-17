@@ -36,8 +36,7 @@ public class MainProcedureController {
 			              System.getProperty("user.dir"));
 				try {
 					 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					 UIManager.setLookAndFeel(new com.seaglasslookandfeel.SeaGlassLookAndFeel());
-					 //UIManager.setLookAndFeel(ch.randelshofer.quaqua.QuaquaManager.getLookAndFeel());
+					 //UIManager.setLookAndFeel(new com.seaglasslookandfeel.SeaGlassLookAndFeel());
 					 Class.forName("Business.GestionProcedure").newInstance(); //Charger la classe (Initialiser depuis BD)
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -31,13 +31,12 @@ public class ProcedureDAO {
 	}
 	
 	public static int add(Procedure procedure) {
-		String addProc = "INSER INTO procedures(chef_id, procedure_nom, service_nom, date_creation, date_modification, archived, nbr_documents, nbr_etapes,"
-				+ "etapes, documents) VALUES(?,?,?,?,?,?,?,?,?,?)";
-		String generatedColumns[] = {"procedure_id"};
+		String addProc = "INSERT INTO procedures(chef_id, procedure_nom, service_nom, date_creation, date_modification, archived, nbr_documents, nbr_etapes,"
+				+ " etapes, documents) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement st;
 		try {
-			st = ConnectionSingleton.getConn().prepareStatement(addProc, generatedColumns);
+			st = ConnectionSingleton.getConn().prepareStatement(addProc, PreparedStatement.RETURN_GENERATED_KEYS);
 			st.setInt(1, procedure.getChef().getChef_id());
 			st.setString(2, procedure.getProcedure_nom());
 			st.setString(3, procedure.getService_nom());
@@ -51,7 +50,8 @@ public class ProcedureDAO {
 			
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
-			return rs.getInt("procedure_id");
+			rs.next();
+			return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;

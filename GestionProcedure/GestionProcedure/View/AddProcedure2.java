@@ -89,14 +89,14 @@ public class AddProcedure2 extends JDialog {
 	 * Create the dialog.
 	 */
 	public AddProcedure2() {
-		 setBounds(100, 100, 450, 300);
-	        setLayout(new BorderLayout());
+		 setBounds(100, 100, 900, 571);
+	        getContentPane().setLayout(new BorderLayout());
 	        //setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 		 JSplitPane splitPane = new JSplitPane();
 	        splitPane.setContinuousLayout(false);
 	        splitPane.setResizeWeight(0.1);
 	        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-	        add(splitPane, BorderLayout.CENTER);
+	        getContentPane().add(splitPane, BorderLayout.CENTER);
 	       splitPane.setLeftComponent(getUpperSplitPane());
 	       
 	       splitPane.setRightComponent(getLowerPanel());

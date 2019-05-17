@@ -30,11 +30,10 @@ public class ChefDAO {
 	
 	public static int add(Chef chef) {
 		String addChef = "INSERT into chefs(employe_id, user_id, service_nom, date_creation, date_modification, archived) values(?,?,?,?,?,?)";
-		String generatedColumns[] = {"chef_id"};
 		
 		PreparedStatement st;
 		try {
-			st = ConnectionSingleton.getConn().prepareStatement(addChef, generatedColumns);
+			st = ConnectionSingleton.getConn().prepareStatement(addChef, PreparedStatement.RETURN_GENERATED_KEYS);
 			st.setInt(1, chef.getEmploye().getEmploye_id());
 			st.setInt(2, chef.getUser().getUser_id());
 			st.setString(3, chef.getService_nom());
@@ -44,7 +43,8 @@ public class ChefDAO {
 			
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
-			return rs.getInt("chef_id");
+			rs.next();
+			return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
