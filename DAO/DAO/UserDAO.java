@@ -1,6 +1,9 @@
 package DAO;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -23,6 +26,29 @@ public class UserDAO {
 		return listeAllUsers;
 		
 	}
+	
+	public static int add(User user) {
+		String addUser = "INSERT INTO users(username, password, role, date_creation)"
+				+ " VALUES(?,?,?,?)";
+		String generatedColumns[] = {"user_id"};
+		
+		PreparedStatement st;
+		try {
+			st = ConnectionSingleton.getConn().prepareStatement(addUser, generatedColumns);
+			st.setString(1, user.getUsername());
+			st.setString(2, user.getPassword());
+			st.setString(3, user.getRole());
+			st.setDate(4, Date.valueOf(user.getDate_creation().toLocalDate()));
+			
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			return rs.getInt("user_id");
+		}  catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	
 	private static User resultToUser(ResultSet result) {
 		User user = new User();

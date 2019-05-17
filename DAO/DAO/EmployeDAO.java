@@ -1,11 +1,15 @@
 package DAO;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import Business.Employe;
 import Business.GestionUser;
+import Business.User;
 
 public class EmployeDAO {
 	
@@ -24,6 +28,41 @@ public class EmployeDAO {
 		return listeAllEmployes;
 	}
 	
+	
+	public static int add(Employe employe) {
+		String addEmp = "INSERT INTO employes(user_id, somme, nom, prenom, email, genre, CIN, telephone,"
+				+ "date_naissance, date_recrutement, date_creation, date_modification, archived) "
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String generatedColumns[] = {"employe_id"};
+		
+		PreparedStatement st;
+		try {
+			st = ConnectionSingleton.getConn().prepareStatement(addEmp, generatedColumns);
+			st.setInt(1, employe.getUser().getUser_id());
+			st.setString(2, employe.getSomme());
+			st.setString(3, employe.getNom());
+			st.setString(4, employe.getPrenom());
+			st.setString(5, employe.getEmail());
+			st.setString(6, employe.getGenre());
+			st.setString(7, employe.getCIN());
+			st.setString(8, employe.getTelephone());
+			st.setDate(9, Date.valueOf(employe.getDate_naissance().toLocalDate()));
+			st.setDate(10, Date.valueOf(employe.getDate_recrutement().toLocalDate()));
+			st.setDate(11, Date.valueOf(employe.getDate_creation().toLocalDate()));
+			st.setDate(12, Date.valueOf(employe.getDate_modification().toLocalDate()));
+			st.setBoolean(13, false);
+			
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			return rs.getInt("chef_id");
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+
 	private static Employe resultToEmploye(ResultSet result) {
 		Employe employe = new Employe();
 		

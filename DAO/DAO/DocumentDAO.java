@@ -1,10 +1,13 @@
 package DAO;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import Business.Document;
+import Business.User;
 
 public class DocumentDAO {
 	
@@ -21,6 +24,25 @@ public class DocumentDAO {
 			e.printStackTrace();
 		}
 		return listeAllDocuments;
+	}
+	
+	
+	public static int add(Document document) {
+		String addDoc = "INSERT INTO documents(document_nom, document_type) values(?, ?)";
+		String generatedColumns[] = {"document_id"};
+		
+		PreparedStatement st;
+		try {
+			st = ConnectionSingleton.getConn().prepareStatement(addDoc, generatedColumns);
+			st.setString(1, document.getDocument_nom());
+			st.setString(2, document.getDocument_type());
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			return rs.getInt("document_id");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	private static Document resultToDocument(ResultSet result) {

@@ -1,12 +1,16 @@
 package DAO;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import Business.Etape;
 import Business.GestionDocument;
 import Business.GestionEmploye;
+import Business.User;
 
 
 public class EtapeDAO {
@@ -26,6 +30,31 @@ public class EtapeDAO {
 		return listeAllEtapes;
 	}
 	
+	public static int add(Etape etape) {
+		String addEtape = "INSERT INTO etapes(employe_id, etape_nom, date_creation, date_modification, archived, nbr_documents, documents)"
+				+ " VALUES(?,?,?,?,?,?,?)";
+		String generatedColumns[] = {"etape_id"};
+		
+		PreparedStatement st;
+		try {
+			st = ConnectionSingleton.getConn().prepareStatement(addEtape, generatedColumns);
+			st.setInt(1, etape.getEmploye().getEmploye_id());
+			st.setString(2, etape.getEtape_nom());
+			st.setDate(3, Date.valueOf(etape.getDate_creation().toLocalDate()));
+			st.setDate(4, Date.valueOf(etape.getDate_modification().toLocalDate()));
+			st.setBoolean(5, false);
+			st.setInt(6, etape.getNbr_documents());
+			st.setString(7, HelpersDAO.documentsListToString(etape.getDocuments()));
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			return rs.getInt("etape_id");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+
 	private static Etape resultToEtape(ResultSet result) {
 		Etape etape = new Etape();
 		try {

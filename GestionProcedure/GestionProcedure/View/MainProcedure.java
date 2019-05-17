@@ -53,7 +53,6 @@ public class MainProcedure extends JFrame {
 		setContentPane(contentPane);
 		setJMenuBar(getMenuBarr());
 		
-		
 		MainProcedureTable table = new MainProcedureTable(mainProcedureTableModel);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setViewportView(table);

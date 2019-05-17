@@ -1,6 +1,9 @@
 package DAO;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -23,6 +26,31 @@ public class ChefDAO {
 			e.printStackTrace();
 		}
 		return listeAllChefs;
+	}
+	
+	public static int add(Chef chef) {
+		String addChef = "INSERT into chefs(employe_id, user_id, service_nom, date_creation, date_modification, archived) values(?,?,?,?,?,?)";
+		String generatedColumns[] = {"chef_id"};
+		
+		PreparedStatement st;
+		try {
+			st = ConnectionSingleton.getConn().prepareStatement(addChef, generatedColumns);
+			st.setInt(1, chef.getEmploye().getEmploye_id());
+			st.setInt(2, chef.getUser().getUser_id());
+			st.setString(3, chef.getService_nom());
+			st.setDate(4, Date.valueOf(chef.getDate_creation().toLocalDate()));
+			st.setDate(5, Date.valueOf(chef.getDate_creation().toLocalDate()));
+			st.setBoolean(6, false);
+			
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			return rs.getInt("chef_id");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		
 	}
 	
 	private static Chef resultToChef(ResultSet result) {

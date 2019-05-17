@@ -33,4 +33,17 @@ public class GestionProcedure{
 		Optional<Procedure> procedure = listeProcedures.stream().filter(proc -> proc.getProcedure_nom().startsWith(debut)).findAny();
 		return procedure.isPresent() == true ? procedure.get() : null;
 	}
+	
+	public static boolean addProcedure(Procedure procedure) {
+		if ( procedure == null ) return false;
+		if( listeProcedures.stream().anyMatch(pr -> pr.getProcedure_nom().equals(procedure.getProcedure_nom())) 
+				&& listeProcedures.stream().anyMatch(pr -> pr.getService_nom().equals(procedure.getService_nom())))
+			return false;
+		
+		int id = ProcedureDAO.add(procedure);
+		if( id == 0) return false;
+		else procedure.setProcedure_id(id);
+		listeProcedures.add(procedure);
+		return true;
+	}
 }

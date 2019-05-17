@@ -21,4 +21,14 @@ public class GestionUser {
 	public static ArrayList<User> getAllUsers() {
 		return listeUsers;
 	}
+	
+	public static boolean addUser(User user) {
+		if ( user == null ) return false;
+		if( listeUsers.stream().anyMatch(us -> us.getUsername().equals(user.getUsername())) ) return false;
+		int id = UserDAO.add(user);
+		if(id == 0) return false;
+		else user.setUser_id(id);
+		listeUsers.add(user);
+		return true;
+	}
 }

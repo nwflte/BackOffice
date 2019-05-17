@@ -9,7 +9,7 @@ import Business.GestionProcedure;
 import Business.Procedure;
 import GestionProcedure.Model.MainProcedureTableModel;
 import GestionProcedure.View.MainProcedure;
-
+import com.seaglasslookandfeel.*;
 /**
  * Controller de la fenetre principale (autres controllers vont etre ajoutes pour d'autre fenetres "Dialogs")
  * @author naouf
@@ -36,6 +36,7 @@ public class MainProcedureController {
 			              System.getProperty("user.dir"));
 				try {
 					 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					 UIManager.setLookAndFeel(new com.seaglasslookandfeel.SeaGlassLookAndFeel());
 					 //UIManager.setLookAndFeel(ch.randelshofer.quaqua.QuaquaManager.getLookAndFeel());
 					 Class.forName("Business.GestionProcedure").newInstance(); //Charger la classe (Initialiser depuis BD)
 				} catch (Exception e) {
