@@ -15,15 +15,17 @@ import GestionProcedure.View.AddProcedure;
 import util.Validation;
 
 public class AddProcedureController {
-	AddProcedure addProcedureWindow;
+	private AddProcedure addProcedureWindow;
 	
 	
 	public AddProcedureController() {
 		addProcedureWindow =  new AddProcedure();
+		addListeners();
 		addProcedureWindow.pack();
+		addProcedureWindow.setSize(960, 600);
 		addProcedureWindow.validate();
 		addProcedureWindow.setVisible(true);
-		addListeners();
+		addProcedureWindow.setAlwaysOnTop(true);
 	}
 	
 	private void addListeners() {

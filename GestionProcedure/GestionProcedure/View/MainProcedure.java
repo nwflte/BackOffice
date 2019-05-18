@@ -17,6 +17,7 @@ import GestionProcedure.Model.MainProcedureTableModel;
 import ui.ActionMenuItem;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
@@ -39,6 +40,7 @@ public class MainProcedure extends JFrame {
 	
 	private static JMenuBar menuBar;
 	private JPanel contentPane;
+	private JButton btnAddProc;
 
 	
 
@@ -59,10 +61,10 @@ public class MainProcedure extends JFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
 		JPanel control = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
-		JButton addProc = new JButton("Ajouter Procedure");
+		btnAddProc = new JButton("Ajouter Procedure");
 		JTextField rechercheProc = new JTextField("");
 		rechercheProc.setColumns(40);
-		control.add(addProc); control.add(rechercheProc);
+		control.add(btnAddProc); control.add(rechercheProc);
 		
 		contentPane.add(control, BorderLayout.NORTH);
 		
@@ -127,4 +129,15 @@ public class MainProcedure extends JFrame {
 	        return menuBar;
 
 	    }
+	 
+	 public void addButtonsListeners(String buttonName, ActionListener listener) {
+			
+			switch(buttonName) {
+			case "btnAddProc" :
+				btnAddProc.addActionListener(listener);
+				break;
+			default:
+				break;
+			}
+	 }
 }

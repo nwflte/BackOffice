@@ -1,6 +1,8 @@
 package GestionProcedure.Controller;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.UIManager;
@@ -8,6 +10,7 @@ import javax.swing.UIManager;
 import Business.GestionProcedure;
 import Business.Procedure;
 import GestionProcedure.Model.MainProcedureTableModel;
+import GestionProcedure.View.AddProcedure;
 import GestionProcedure.View.MainProcedure;
 import com.seaglasslookandfeel.*;
 /**
@@ -17,15 +20,29 @@ import com.seaglasslookandfeel.*;
  */
 public class MainProcedureController {
 	
-	MainProcedure frame;
+	MainProcedure mainProcedureWindow;
 	
 	public MainProcedureController() {
-		frame = new MainProcedure();
-		frame.pack();
-		frame.validate();
-		frame.setVisible(true);
+		mainProcedureWindow = new MainProcedure();
+		addListeners();
+		mainProcedureWindow.pack();
+		mainProcedureWindow.validate();
+		mainProcedureWindow.setVisible(true);
+		
 	}
 	
+	private void addListeners() {
+		mainProcedureWindow.addButtonsListeners("btnAddProc", new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				AddProcedureController addProcedureController = new AddProcedureController();
+				
+			}
+			
+		});
+		
+	}
 	/**
 	 * Launch the application.
 	 */
