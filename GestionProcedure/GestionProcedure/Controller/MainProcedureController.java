@@ -20,7 +20,7 @@ public class MainProcedureController {
 	MainProcedure frame;
 	
 	public MainProcedureController() {
-		frame = new MainProcedure(new MainProcedureTableModel());
+		frame = new MainProcedure();
 		frame.pack();
 		frame.validate();
 		frame.setVisible(true);

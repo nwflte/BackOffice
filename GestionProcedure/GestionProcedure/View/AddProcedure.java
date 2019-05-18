@@ -9,11 +9,19 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import Business.GestionChef;
+import Business.IDInterface;
 import GestionProcedure.Model.DocumentsTableModel;
 import GestionProcedure.Model.EtapesTableModel;
+import ui.DataComboBox;
+
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
+import java.awt.event.ActionEvent;
 
 
 public class AddProcedure extends JDialog {
@@ -25,6 +33,12 @@ public class AddProcedure extends JDialog {
 	private JTable tableAddedDoc;
 	private JTextField txtNomDoc;
 	private JTextField txtTypeDoc;
+	private JButton btnAddEtapeToTable;
+	private DataComboBox chefComboBox;
+	private JButton btnCreateEtape;
+	private JButton btnAddDocToTable;
+	private JButton btnSaveProc;
+	private JButton btnCreateDocument;
 	
 	public AddProcedure() {
 		getContentPane().setLayout(null);
@@ -59,9 +73,9 @@ public class AddProcedure extends JDialog {
 		infoPanel.add(txtServiceProc);
 		txtServiceProc.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(285, 166, 31, 22);
-		infoPanel.add(comboBox);
+		chefComboBox = new DataComboBox(new ArrayList<IDInterface>(GestionChef.getAllChefs()));
+		chefComboBox.setBounds(285, 166, 235, 22);
+		infoPanel.add(chefComboBox);
 		
 		JPanel EtapesPanel = new JPanel();
 		tabbedPane.addTab("Etapes", null, EtapesPanel, null);
@@ -71,23 +85,23 @@ public class AddProcedure extends JDialog {
 		scrollPaneAllEtapes.setBounds(12, 51, 422, 189);
 		EtapesPanel.add(scrollPaneAllEtapes);
 		
-		tableAllEtapes = new JTable(new EtapesTableModel(false));
+		tableAllEtapes = new JTable(new EtapesTableModel(EtapesTableModel.EtatInit.NON_VIDE));
 		scrollPaneAllEtapes.setViewportView(tableAllEtapes);
 		
 		JScrollPane scrollPaneAddedEtapes = new JScrollPane();
 		scrollPaneAddedEtapes.setBounds(503, 51, 342, 189);
 		EtapesPanel.add(scrollPaneAddedEtapes);
 		
-		tableAddedEtapes = new JTable(new EtapesTableModel(true));
+		tableAddedEtapes = new JTable(new EtapesTableModel(EtapesTableModel.EtatInit.VIDE));
 		scrollPaneAddedEtapes.setViewportView(tableAddedEtapes);
 		
-		JButton btnAjouterToTable = new JButton("+");
-		btnAjouterToTable.setBounds(446, 93, 49, 25);
-		EtapesPanel.add(btnAjouterToTable);
+		btnAddEtapeToTable = new JButton("+");
+		btnAddEtapeToTable.setBounds(446, 131, 49, 25);
+		EtapesPanel.add(btnAddEtapeToTable);
 		
-		JButton btnCreerEtape = new JButton("Creer une etape");
-		btnCreerEtape.setBounds(633, 264, 51, 25);
-		EtapesPanel.add(btnCreerEtape);
+		btnCreateEtape = new JButton("Creer une etape");
+		btnCreateEtape.setBounds(633, 264, 51, 25);
+		EtapesPanel.add(btnCreateEtape);
 		
 		JPanel DocumentsPanel = new JPanel();
 		tabbedPane.addTab("Documents", null, DocumentsPanel, null);
@@ -97,19 +111,19 @@ public class AddProcedure extends JDialog {
 		scrollPaneAllDoc.setBounds(47, 55, 362, 187);
 		DocumentsPanel.add(scrollPaneAllDoc);
 		
-		tableAllDoc = new JTable(new DocumentsTableModel(false));
+		tableAllDoc = new JTable(new DocumentsTableModel(DocumentsTableModel.EtatInit.NON_VIDE));
 		scrollPaneAllDoc.setViewportView(tableAllDoc);
 		
 		JScrollPane scrollPaneAddedDoc = new JScrollPane();
 		scrollPaneAddedDoc.setBounds(531, 54, 337, 188);
 		DocumentsPanel.add(scrollPaneAddedDoc);
 		
-		tableAddedDoc = new JTable(new DocumentsTableModel(true));
+		tableAddedDoc = new JTable(new DocumentsTableModel(DocumentsTableModel.EtatInit.VIDE));
 		scrollPaneAddedDoc.setViewportView(tableAddedDoc);
 		
-		JButton btnAjouterDocToTable = new JButton("+");
-		btnAjouterDocToTable.setBounds(447, 134, 56, 25);
-		DocumentsPanel.add(btnAjouterDocToTable);
+		btnAddDocToTable = new JButton("+");
+		btnAddDocToTable.setBounds(447, 134, 56, 25);
+		DocumentsPanel.add(btnAddDocToTable);
 		
 		JLabel lblNomDoc = new JLabel("Nom");
 		lblNomDoc.setBounds(58, 302, 56, 16);
@@ -120,17 +134,82 @@ public class AddProcedure extends JDialog {
 		DocumentsPanel.add(lblTypeDoc);
 		
 		txtNomDoc = new JTextField();
-		txtNomDoc.setBounds(244, 299, 116, 22);
+		txtNomDoc.setBounds(244, 299, 200, 22);
 		DocumentsPanel.add(txtNomDoc);
 		txtNomDoc.setColumns(10);
 		
 		txtTypeDoc = new JTextField();
-		txtTypeDoc.setBounds(244, 349, 116, 22);
+		txtTypeDoc.setBounds(244, 349, 200, 22);
 		DocumentsPanel.add(txtTypeDoc);
 		txtTypeDoc.setColumns(10);
 		
-		JButton btnSaveProc = new JButton("Enregistrer");
+		btnCreateDocument = new JButton("Cr\u00E9er Document");
+		btnCreateDocument.setBounds(516, 323, 169, 25);
+		DocumentsPanel.add(btnCreateDocument);
+		
+		btnSaveProc = new JButton("Enregistrer");
 		btnSaveProc.setBounds(374, 471, 97, 25);
 		getContentPane().add(btnSaveProc);
+		
+	}
+	
+	public void addButtonsListeners(String buttonName, ActionListener listener) {
+		
+		switch(buttonName) {
+		case "btnCreateEtape" :
+			btnCreateEtape.addActionListener(listener);
+			break;
+		case "btnCreateDocument" :
+			btnCreateDocument.addActionListener(listener);
+			break;
+		case "btnAddDocToTable" :
+			btnAddDocToTable.addActionListener(listener);
+			break;
+		case "btnAddEtapeToTable" :
+			btnAddEtapeToTable.addActionListener(listener);
+			break;
+		case "btnSaveProc" :
+			btnSaveProc.addActionListener(listener);
+			break;
+		default :
+				break;
+		}
+	}
+	
+	
+	public DataComboBox getChefComboBox() {
+		return chefComboBox;
+	}
+
+	public JTextField getTxtNomProc() {
+		return txtNomProc;
+	}
+
+	public JTextField getTxtServiceProc() {
+		return txtServiceProc;
+	}
+
+	public JTable getAllEtapesTable() {
+		return this.tableAllEtapes;
+	}
+	
+	public JTable getAddedEtapesTable() {
+		return this.tableAddedEtapes;
+	}
+	
+	public JTable getAllDocTable() {
+		return this.tableAllDoc;
+	}
+	
+	public JTable getAddedDocTable() {
+		return this.tableAddedDoc;
+	}
+	
+	public JTextField getTxtNomDoc() {
+		return txtNomDoc;
+	}
+
+	public JTextField getTxtTypeDoc() {
+		return txtTypeDoc;
 	}
 }

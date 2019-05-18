@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="forms-1.2.1.jar"/>
 	<classpathentry kind="lib" path="swingx-1.6.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/naouf/Downloads/seaglasslookandfeel-0.2.1.jar"/>
+	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

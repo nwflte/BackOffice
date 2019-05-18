@@ -4,13 +4,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 import Business.Employe;
 import Business.Etape;
 import Business.GestionEmploye;
 import Business.GestionEtape;
 
-public class EtapesTableModel extends AbstractTableModel  {
+public class EtapesTableModel extends AbstractTableModel implements TableModel  {
 	
 	private ArrayList<Etape> listeEtapes;
 	private ArrayList<Employe> listeEmployes;
@@ -18,8 +19,10 @@ public class EtapesTableModel extends AbstractTableModel  {
 	private String[] columnsName = {"Nom", "Employe", "Date Creation", "Nombre Documents"};
 	private Class[] columnsClass = {String.class, String.class, LocalDateTime.class, Integer.class};
 	
-	public EtapesTableModel(boolean isVide) {
-		if(isVide) {
+	public enum EtatInit { VIDE, NON_VIDE };
+	
+	public EtapesTableModel(EtatInit etat) {
+		if(etat == EtatInit.VIDE) {
 			this.listeEmployes = new ArrayList<Employe>();
 			this.listeEtapes = new ArrayList<Etape>();
 		} else {
@@ -60,9 +63,15 @@ public class EtapesTableModel extends AbstractTableModel  {
 		}
 	}
 	
-	public void addRow(Etape etape) {
+	public boolean addRow(Etape etape) {
+		if(etape == null || listeEtapes.contains(etape)) return false;
 		this.listeEtapes.add(etape);
 		this.fireTableRowsInserted(listeEtapes.size()-1, listeEtapes.size()-1);
+		return true;
+	}
+	
+	public Etape getEtapeAtRow(int rowIndex) {
+		return this.listeEtapes.get(rowIndex);
 	}
 
 }

@@ -45,7 +45,7 @@ public class MainProcedure extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainProcedure(MainProcedureTableModel mainProcedureTableModel) {
+	public MainProcedure() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = (JPanel) this.getContentPane();
 		setBounds(100, 100, 850, 500);
@@ -53,7 +53,7 @@ public class MainProcedure extends JFrame {
 		setContentPane(contentPane);
 		setJMenuBar(getMenuBarr());
 		
-		MainProcedureTable table = new MainProcedureTable(mainProcedureTableModel);
+		JTable table = new JTable(new MainProcedureTableModel());
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane, BorderLayout.CENTER);

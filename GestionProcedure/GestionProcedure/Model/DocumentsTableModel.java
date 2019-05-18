@@ -15,8 +15,10 @@ public class DocumentsTableModel extends AbstractTableModel {
 	private String[] columnsName = {"Nom", "Type"};
 	private Class[] columnsClass = {String.class, String.class};
 	
-	public DocumentsTableModel(boolean isVide) {
-		if(isVide) listDocument = new ArrayList<Document>();
+	public enum EtatInit { VIDE, NON_VIDE };
+	
+	public DocumentsTableModel(EtatInit etat) {
+		if(etat == EtatInit.VIDE) listDocument = new ArrayList<Document>();
 		else listDocument = GestionDocument.getAllDocuments();
 	}
 	
@@ -50,8 +52,14 @@ public class DocumentsTableModel extends AbstractTableModel {
 		}
 	}
 	
-	public void addRow(Document document) {
+	public boolean addRow(Document document) {
+		if(document == null || listDocument.contains(document)) return false;
 		this.listDocument.add(document);
 		this.fireTableRowsInserted(listDocument.size()-1, listDocument.size()-1);
+		return true;
+	}
+	
+	public Document getDocumentAtRow(int rowIndex) {
+		return this.listDocument.get(rowIndex);
 	}
 }

@@ -15,6 +15,7 @@ import Business.GestionDocument;
 import Business.GestionEmploye;
 import Business.GestionEtape;
 import Business.GestionProcedure;
+import Business.GestionUser;
 import Business.Procedure;
 import Business.User;
 
@@ -27,6 +28,8 @@ public class Tester {
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println(GestionUser.getUser(1).getUsername());
 		
 		Etape etape = new Etape();
 		etape.setEtape_nom("testetape");
